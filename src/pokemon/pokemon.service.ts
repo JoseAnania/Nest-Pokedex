@@ -3,6 +3,7 @@
 import { BadRequestException, Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { isValidObjectId, Model } from 'mongoose';
+import { PaginationDto } from 'src/common/dto/pagination.dto';
 import { CreatePokemonDto } from './dto/create-pokemon.dto';
 import { UpdatePokemonDto } from './dto/update-pokemon.dto';
 import { Pokemon } from './entities/pokemon.entity';
@@ -37,8 +38,23 @@ export class PokemonService {
     }
   }
 
-  findAll() {
-    return `This action returns all pokemon`;
+  // método para obtener todos los Pokemon (con paginación)
+  async findAll(paginationDto: PaginationDto) {
+
+    // creamos una constante desestructurada que por defecto (si no vienen los parámetros "limit" y "offset" será de 10 y 0 respect.)
+    const {limit = 10, offset = 0} = paginationDto;
+
+    // retornamos todos los pokemon según la paginación (por defecto o no)
+    return this.pokemonModel.find()
+
+      // cantidad de resultados
+      .limit(limit)
+      // página
+      .skip(offset)
+      // orden
+      .sort({number:1})
+      // no mostrar
+      .select('-__v');
   }
 
   // método para obtener un Pokemon por Id (que puede ser por "number", "name", "mongoId")
