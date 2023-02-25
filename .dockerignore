@@ -1,0 +1,6 @@
+# Archivo creado para ignorar al realizar la Dockerización
+
+dist/
+node_modules/
+.gitignore
+.git/

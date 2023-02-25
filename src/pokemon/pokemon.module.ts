@@ -10,8 +10,9 @@ import { Pokemon, PokemonSchema } from './entities/pokemon.entity';
   controllers: [PokemonController],
   providers: [PokemonService],
 
-  // conexión a MongoBD (desde el Entity)
   imports: [
+
+    // conexión a MongoBD (desde el Entity)
     MongooseModule.forFeature([
       {
         name: Pokemon.name,

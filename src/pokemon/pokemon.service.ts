@@ -11,10 +11,12 @@ import { Pokemon } from './entities/pokemon.entity';
 @Injectable()
 export class PokemonService {
 
-  // inyección del modelo de Pokemon en MongoDB
   constructor(
-    @InjectModel(Pokemon.name) 
-    private readonly pokemonModel: Model<Pokemon>) {}
+    @InjectModel(Pokemon.name)
+    
+    // inyección del modelo de Pokemon en MongoDB
+    private readonly pokemonModel: Model<Pokemon>,
+    ) {}
  
   // método para agregar un Pokemon
   async create(createPokemonDto: CreatePokemonDto) {

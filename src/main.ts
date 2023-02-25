@@ -24,7 +24,7 @@ async function bootstrap() {
       }),
   );
   
-  // puerto utilizado
-  await app.listen(3000);
+  // puerto utilizado definido en las variables de entorno (".env")
+  await app.listen(process.env.PORT);
 }
 bootstrap();

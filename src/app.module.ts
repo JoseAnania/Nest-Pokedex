@@ -7,22 +7,32 @@ import { join } from 'path';
 import { PokemonModule } from './pokemon/pokemon.module';
 import { CommonModule } from './common/common.module';
 import { SeedModule } from './seed/seed.module';
+import { ConfigModule } from '@nestjs/config';
+import { EnvConfiguration } from './config/env.config';
+import { JoiValidationSchema } from './config/joi.validation';
 
 @Module({
 
   imports: [
 
+    // importamos el servicio que nos permite utilizar las variables de entorno (".env") y las validaciones de Joi
+    ConfigModule.forRoot({
+      load: [EnvConfiguration],
+      validationSchema: JoiValidationSchema
+    }),
+
     // importamos el servicio del Contenido Estático
     ServeStaticModule.forRoot({rootPath: join(__dirname,'..','public'),}),
 
-    // importamos el servicio de conexión a la BD (Mongo)
-    MongooseModule.forRoot('mongodb://localhost:27017/nest-pokemon'),
+    // importamos el servicio de conexión a la BD (Mongo) que se encuentra en las variables de entorno (".env")
+    MongooseModule.forRoot(process.env.MONGODB),
 
     // importamos el servicio de Pokemon
     PokemonModule,
 
     CommonModule,
 
+    // importamos el servicio de Seed
     SeedModule
   ],
   controllers: [],
